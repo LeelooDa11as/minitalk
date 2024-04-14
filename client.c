@@ -18,12 +18,31 @@ void	ft_send_signal(int pid, char msg)
 	}
 }
 
+void	ft_send_int(int pid, int msg_len)
+{
+	int				bit;
+	int				c;
+
+	bit = 0;
+	while (bit < 32)
+	{
+		c = msg_len >> bit;
+		if (c % 2 == 0)
+			kill(pid, SIGUSR2);
+		else
+			kill(pid, SIGUSR1);
+		usleep(42);
+		bit++;
+	}
+}
+
 
 int	main(int argc, char *argv[])
 {
     int 		pid;
 	int			i;
     const char  *message;
+
 
     if (argc != 3)
     {
@@ -33,7 +52,8 @@ int	main(int argc, char *argv[])
 	pid = ft_atoi(argv[1]);
 	i = 0;
 	message = argv[2];
-	g_len = ft_strlen(argv[2]);
+	ft_send_int(pid, (int)ft_strlen(argv[2]));
+	usleep(100);
 	while (message[i] != '\0')
 	{
 		ft_send_signal(pid, message[i]);
