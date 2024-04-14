@@ -35,7 +35,7 @@ void	ft_decode(int sign)
 		//printf("BIT is 1 \n");
 		c |= (0x01 << bit);
 	}
-	else
+	//else
 		//printf("BIT is 0 \n");
 	bit++; 
 	if (bit >= 8)
