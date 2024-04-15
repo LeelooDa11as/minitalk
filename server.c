@@ -1,12 +1,16 @@
-#include "minitalk.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   server.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kkoval <kkoval@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/15 14:50:54 by kkoval            #+#    #+#             */
+/*   Updated: 2024/04/15 15:05:52 by kkoval           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int	ft_free(char **str)
-{
-	if (*str != NULL)
-		free(*str);
-	*str = NULL;
-	return (1);
-}
+#include "minitalk.h"
 
 void	ft_add_char(char *str, char c)
 {
@@ -18,23 +22,16 @@ void	ft_add_char(char *str, char c)
 		i = 0;
 }
 
-
-void ft_take_the_msg(int sign, char *str, int *flag)
+void	ft_take_the_msg(int sign, char *str, int *flag)
 {
 	static int				bit = 0;
 	static unsigned char	c = '\0';
 
 	if (sign == SIGUSR1)
-	{
-		//printf("BIT is 1 \n");
 		c |= (0x01 << bit);
-	}
-	//else
-		//printf("BIT is 0 \n");
-	bit++; 
+	bit++;
 	if (bit >= 8)
 	{
-		//printf("%c\n", c);
 		ft_add_char(str, c);
 		if (c == '\0')
 		{
@@ -51,15 +48,14 @@ void ft_take_the_msg(int sign, char *str, int *flag)
 int	ft_take_initial_len(int sign, int *flag)
 {
 	static int	bit = 0;
-	static int	num	= 0;
-	int 		aux;
+	static int	num = 0;
+	int			aux;
 
 	if (sign == SIGUSR1)
 		num |= (0x01 << bit);
-
-	bit++; 
+	bit++;
 	if (bit >= 32)
-    {
+	{
 		*flag = 1;
 		bit = 0;
 		aux = num;
@@ -71,18 +67,16 @@ int	ft_take_initial_len(int sign, int *flag)
 
 void	ft_decode(int sign)
 {
-	static int 		flag = 0;
+	static int		flag = 0;
 	static char		*str = NULL;
-	int 			len;
+	int				len;
 
 	len = 0;
-
 	if (flag == 0)
 	{
 		len = ft_take_initial_len(sign, &flag);
 		if (len != -1)
 		{
-			printf("%d\n", len);
 			str = malloc(sizeof(char) * (len + 1));
 			if (!str)
 				exit (0);

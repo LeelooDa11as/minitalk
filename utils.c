@@ -1,6 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kkoval <kkoval@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/15 14:50:44 by kkoval            #+#    #+#             */
+/*   Updated: 2024/04/15 14:52:17 by kkoval           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minitalk.h"
 
-void	ft_putnbr(int num)
+int	ft_free(char **str)
+{
+	if (*str != NULL)
+		free(*str);
+	*str = NULL;
+	return (1);
+}
+/*void	ft_putnbr(int num)
 {
 	char	c;
 
@@ -12,4 +31,4 @@ void	ft_putnbr(int num)
 	}
 	ft_putnbr(num / 10);
 	ft_putnbr(num % 10);
-}
+}*/
