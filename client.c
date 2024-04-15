@@ -6,11 +6,30 @@
 /*   By: kkoval <kkoval@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:51:29 by kkoval            #+#    #+#             */
-/*   Updated: 2024/04/15 15:24:44 by kkoval           ###   ########.fr       */
+/*   Updated: 2024/04/15 18:01:36 by kkoval           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+
+int	ft_int_size(char *str)
+{
+	int	bsize;
+	int	i;
+	int	bytes;
+
+	i = 0;
+	bsize = 0;
+	while (str[i])
+	{
+		if (str[i] | (1 << bsize))
+			bsize += 1;
+		if (bsize % 8 == 0)
+			i++;
+	}
+	bytes = bsize / 8;
+	return (bytes);
+}
 
 void	ft_send_signal(int pid, char msg)
 {
@@ -24,16 +43,14 @@ void	ft_send_signal(int pid, char msg)
 		if (c % 2 == 0)
 		{
 			if (kill(pid, SIGUSR2) == -1)
-				write(1, "Signal error\n", 13);
-			usleep(100);
+				ft_putstr_fd("Signal error\n", 1);
 		}
 		else
 		{
 			if (kill(pid, SIGUSR1) == -1)
-				write(1, "Signal error\n", 13);
-			usleep(100);
+				ft_putstr_fd("Signal error\n", 1);
 		}
-		usleep(100);
+		usleep(50);
 		bit++;
 	}
 }
@@ -48,10 +65,16 @@ void	ft_send_int(int pid, int msg_len)
 	{
 		c = msg_len >> bit;
 		if (c % 2 == 0)
-			kill(pid, SIGUSR2);
+		{
+			if (kill(pid, SIGUSR2) == -1)
+				ft_putstr_fd("Signal error\n", 1);
+		}
 		else
-			kill(pid, SIGUSR1);
-		usleep(100);
+		{
+			if (kill(pid, SIGUSR1) == -1)
+				ft_putstr_fd("Signal error\n", 1);
+		}
+		usleep(50);
 		bit++;
 	}
 }
@@ -70,7 +93,7 @@ int	main(int argc, char *argv[])
 	pid = ft_atoi(argv[1]);
 	i = 0;
 	message = argv[2];
-	ft_send_int(pid, (int)ft_strlen(argv[2]));
+	ft_send_int(pid, ft_int_size(argv[2]));
 	usleep(100);
 	while (message[i] != '\0')
 	{
