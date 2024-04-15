@@ -13,7 +13,7 @@ void	ft_send_signal(int pid, char msg)
 			kill(pid, SIGUSR2);
 		else
 			kill(pid, SIGUSR1);
-		usleep(42);
+		usleep(100);
 		bit++;
 	}
 }
@@ -31,7 +31,7 @@ void	ft_send_int(int pid, int msg_len)
 			kill(pid, SIGUSR2);
 		else
 			kill(pid, SIGUSR1);
-		usleep(42);
+		usleep(100);
 		bit++;
 	}
 }
