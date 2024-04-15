@@ -6,7 +6,7 @@
 /*   By: kkoval <kkoval@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:51:29 by kkoval            #+#    #+#             */
-/*   Updated: 2024/04/15 18:01:36 by kkoval           ###   ########.fr       */
+/*   Updated: 2024/04/15 18:43:28 by kkoval           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_send_signal(int pid, char msg)
 			if (kill(pid, SIGUSR1) == -1)
 				ft_putstr_fd("Signal error\n", 1);
 		}
-		usleep(50);
+		usleep(80);
 		bit++;
 	}
 }
@@ -74,7 +74,7 @@ void	ft_send_int(int pid, int msg_len)
 			if (kill(pid, SIGUSR1) == -1)
 				ft_putstr_fd("Signal error\n", 1);
 		}
-		usleep(50);
+		usleep(80);
 		bit++;
 	}
 }

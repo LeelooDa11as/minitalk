@@ -6,7 +6,7 @@
 #    By: kkoval <kkoval@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/15 14:51:08 by kkoval            #+#    #+#              #
-#    Updated: 2024/04/15 14:52:33 by kkoval           ###   ########.fr        #
+#    Updated: 2024/04/15 19:01:34 by kkoval           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,10 +37,10 @@ all: lib $(NAME_S) $(NAME_C)
 lib:
 	make -C ./Libft
 
-${NAME_S}:	${OBJS_S} ./Libft/libft.a
+${NAME_S}:	${OBJS_S} ./Libft/libft.a Makefile
 	${CC} ${CFLAGS} ${LIBS} ${OBJS_S}  -o ${NAME_S}
 
-${NAME_C}:	${OBJS_C} ./Libft/libft.a
+${NAME_C}:	${OBJS_C} ./Libft/libft.a Makefile
 	${CC} ${CFLAGS} ${LIBS} ${OBJS_C}  -o ${NAME_C}
 
 %.o: %.c
